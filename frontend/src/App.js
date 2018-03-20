@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import web3 from './Ethereum/web3'
+import deployedContractInstance from './Ethereum/basicContract'
+
 class App extends Component {
+  state = {
+    message: 'Loading from smart contract...'
+  }
+
+  async componentDidMount() {
+    const message = await deployedContractInstance.methods.test().call()
+    this.setState({ message })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <h1>Hello World! This is the message: { this.state.message } </h1>
     );
   }
 }
